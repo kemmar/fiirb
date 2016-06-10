@@ -2,13 +2,28 @@ group 'fiirb'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'scala'
-
-sourceCompatibility = 1.5
+apply plugin: 'idea'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile "org.scala-lang:scala-library:2.11.7",
+            "org.scala-lang:scala-compiler:2.11.7",
+            'com.github.finagle:finch-core_2.11:0.10.0',
+            'com.github.finagle:finch-circe_2.11:0.10.0',
+            'io.circe:circe-generic_2.11:0.4.1',
+            'io.circe:circe-parser_2.11:0.4.1'
+
+    testCompile "junit:junit:4.11"
 }
+
+task run(type: JavaExec, dependsOn: classes) {
+    main = 'application.Application'
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}
+
+task stage(dependsOn: build)
