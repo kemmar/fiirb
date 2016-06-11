@@ -1,6 +1,4 @@
-group 'fiirb'
-version '1.0-SNAPSHOT'
-
+apply plugin: 'application'
 apply plugin: 'scala'
 apply plugin: 'idea'
 
@@ -17,13 +15,12 @@ dependencies {
             'io.circe:circe-generic_2.11:0.4.1',
             'io.circe:circe-parser_2.11:0.4.1'
 
+    compile "com.heroku.sdk:heroku-jdbc:0.1.1"
+    compile "org.postgresql:postgresql:9.4-1201-jdbc4"
+
     testCompile "junit:junit:4.11"
 }
 
-task run(type: JavaExec, dependsOn: classes) {
-    main = 'application.Application'
-    classpath sourceSets.main.runtimeClasspath
-    classpath configurations.runtime
-}
+mainClassName = 'application.Application'
 
-task stage(dependsOn: build)
+task stage(dependsOn: ['clean', 'installDist'])
