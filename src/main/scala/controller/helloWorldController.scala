@@ -6,7 +6,7 @@ import io.finch.circe._
 import io.circe.generic.auto._
 
 object HelloWorldController {
-  val helloWorldRoute: Endpoint[Greeting] =
+  val helloWorldRoute =
     put("hello" :: body.as[Name]) { req: Name =>
       Ok {
         Greeting(req.name)
