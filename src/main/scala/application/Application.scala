@@ -4,5 +4,8 @@ import com.twitter.finagle.Http
 import com.twitter.util.Await
 
 object Application extends App {
-  Await.ready(Http.server.serve(s":${System.getenv("PORT")}", RouteConfig.buildRoutes))
+  val port = System.getenv("PORT")
+
+  println(s"connecting to port: $port")
+  Await.ready(Http.server.serve(s":$port", RouteConfig.buildRoutes))
 }
