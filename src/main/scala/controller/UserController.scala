@@ -11,8 +11,7 @@ object UserController {
   lazy val createUserRoute =  post("user" :: body.as[UserReq]) { user: UserReq =>
       Ok {
         transactional {
-          (User.apply _)
-         UserReq.unapply(user).get
+          (User.apply _).tupled  (UserReq.unapply(user).get)
         }
     }
   }

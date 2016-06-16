@@ -17,9 +17,9 @@ object AppConfig {
   val conf = env.getConfig(s"${getenv("PROFILE")}").withFallback(env)
 
   lazy val port = conf.getString("PORT")
-  lazy val dbPassword = conf.getString("JDBC_DATABASE_PASSWORD")
-  lazy val dbUrl = conf.getString("JAWSDB_MARIA_URL")
-
+  lazy val dbPassword = conf.getString("DB_PASSWORD")
+  lazy val dbUsername = conf.getString("DB_USERNAME")
+  lazy val dbUrl = conf.getString("DB_URL")
 
   implicit class BetterResponses(response: twitter.util.Future[Response]) {
     def responseTo[T]()(implicit decoder: Decoder[T]) = {
