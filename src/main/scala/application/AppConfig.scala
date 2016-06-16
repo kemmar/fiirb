@@ -10,11 +10,15 @@ import io.circe.Decoder
 import io.circe.parser._
 
 object AppConfig {
-  val conf = ConfigFactory.load()
+  val env = ConfigFactory
+    .load()
+    .withFallback(ConfigFactory.parseMap(System.getenv()))
 
-  lazy val port = getenv("PORT")
-  lazy val dbPassword = getenv("JDBC_DATABASE_PASSWORD")
-  lazy val dbUrl = getenv("DATABASE_URL")
+  val conf = env.getConfig(s"${getenv("PROFILE")}").withFallback(env)
+
+  lazy val port = conf.getString("PORT")
+  lazy val dbPassword = conf.getString("JDBC_DATABASE_PASSWORD")
+  lazy val dbUrl = conf.getString("JAWSDB_MARIA_URL")
 
 
   implicit class BetterResponses(response: twitter.util.Future[Response]) {

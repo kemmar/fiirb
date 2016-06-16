@@ -12,5 +12,4 @@ object HelloWorldController {
         Greeting(req.name)
       }
     }
-
 }
